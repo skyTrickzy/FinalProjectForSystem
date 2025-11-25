@@ -1,0 +1,252 @@
+custom-aside {  
+    padding: .5rem;
+    display: flex;
+    gap: 0.5rem;
+    background: var(--primary-foreground);
+    flex-direction: column;
+    border-right: var(--border-style);
+
+    > * {
+        margin-inline: .25rem;
+    }
+
+    .aside__logo {
+        flex-basis: 7rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .aside__title {
+        text-align: center;
+        text-shadow: var(--text-shadow);
+        font-weight: var(--text-bold);
+    }
+
+    .aside__nav {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-top: 5rem;
+        padding-inline: 1.5rem;
+
+        nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+
+            > a {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+
+                * {
+                    transition: all var(--transition-time);
+                }
+                
+                > span {
+                    font-size: var(--text-base);
+                    font-weight: var(--text-regular);
+                    color: var(--primary-color-text);
+                }
+            }
+
+            a:hover .icons,
+            a:hover span {
+                color: var(--hover-color);
+            }
+        }
+    }
+    .aside__logout {
+        margin-inline: auto;
+        cursor: pointer;
+        margin-top: 1rem;
+        margin-block: auto;
+
+        .btn {
+            all: unset;
+            transition: var(--transition-time);
+            font-size: var(--text-base);
+        }
+    }
+
+    .aside__logout:hover .btn {
+        color: var(--hover-color);
+    }
+}
+
+.content {
+    flex: 1;
+    background-color: var(--primary-background);
+}
+
+custom-header {
+    flex: 0 0 7rem;
+    background: var(--primary-foreground);
+    border-bottom: var(--border-style);
+
+    align-content: center;
+
+    .actions-bar {
+        padding-inline: 2rem;
+        display: flex;
+        align-items: center;
+        height: 4rem;
+        justify-content: space-between;
+
+        .actions__searchBar {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            flex-basis: 40%;
+            max-width: 40rem;
+            height: 2.5rem;
+            background: var(--primary-background);
+            border: var(--border-style);
+            border-radius: var(--rounded-xl);
+            box-shadow: var(--shadow-style);
+
+            .inputs {
+                border-radius: inherit;
+                overflow: hidden;
+                display: flex;
+                margin-left: 2rem;
+                height: inherit;
+            }
+
+            .search-input {
+                all: unset;
+                height: inherit;
+                width: 100%;
+            }
+
+            .button-search {
+                display: flex;
+                all: unset;
+                aspect-ratio: 1;
+                text-align: center;
+            }
+
+            .search-results-tab {
+                display: none;
+                height: 25rem;
+                width: 100%;
+                position: absolute;
+                top: 120%;
+                background: var(--primary-foreground);
+                border: var(--border-style);
+                border-radius: var(--rounded-xl);
+                z-index: 9999;
+            }
+        }
+
+        .actions__notification-bar-and-profile-bar {
+            display: flex;
+            flex-basis: 30%;
+            align-items: center;
+            justify-content: space-evenly;
+
+            .notification-bar {
+                position: relative;
+                display: flex;
+
+                &::after {
+                    --size: 1rem;
+                    --color: hsl(0 0 95%);
+
+                    content: "1";
+                    position: absolute;
+                    background: red;
+                    aspect-ratio: 1;
+                    height: var(--size);
+                    width: var(--size);
+                    text-align: center;
+                    color: var(--color);
+                    font-weight: var(--text-semibold);
+                    font-size: var(--text-xs);
+                    border-radius: var(--rounded-circle);
+                    left: 50%;
+                    bottom: 30%;
+                }
+            }
+
+            .notification__bell {
+                text-shadow: var(--text-shadow);
+                transition: all var(--transition-time);
+            }
+
+            .notification__bell:hover {
+                color: var(--hover-color);
+                cursor: pointer;
+            }
+
+            .notification__tab {
+                --size: 15rem;
+                
+                z-index: 9999;
+                position: absolute;
+                display: none;
+                background: var(--primary-foreground);
+                box-shadow: var(--shadow-style);
+                border-radius: var(--rounded-xl);
+                border: var(--border-style);
+                height: var(--size);
+                width: calc(var(--size) - 20%);
+                right: 100%;
+                top: 100%;
+            }
+
+            .profile-bar {
+                position: relative;
+            }
+
+            .profile__tab {
+                --size: 10rem;
+
+                position: absolute;
+                display: none;
+                right: 70%; 
+                height: var(--size);
+                width: var(--size);
+                background: var(--primary-foreground);
+                border: var(--border-style);
+                border-radius: var(--rounded-xl);
+                box-shadow: var(--shadow-style);
+                z-index: 9999;
+            }
+
+            .profile__picture {
+                --size: 3rem;
+
+                box-shadow: var(--shadow-style);
+                border-radius: var(--rounded-circle);
+                height: var(--size);
+                width: var(--size);
+                background-image: url("/src/public/ProfilePicture.png");
+                background-position: center;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+
+@media only screen and (max-width: 560px) {
+
+    main {
+        flex-basis: 100%;
+    }
+
+    .actions-bar {
+        padding: 0 !important;
+        justify-content: space-evenly !important;
+    }
+
+    custom-aside {
+        max-width: 15rem;
+        position: absolute;
+        z-index: 9999;
+        height: 100%;
+        right: 100%;
+    }
+}

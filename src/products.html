@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="/src/css/stylesheet.css" />
+        <title>Products</title>
+    </head>
+    <body>
+        <div class="wrapper">
+            <custom-aside></custom-aside>
+            <main>
+                <custom-header></custom-header>
+                <section class="content">
+                    <div class="content__title">
+                        <h2 class="page-title">Products</h2>
+                        <span class="page-description"
+                            >Manage your inventory, sales, and customer records</span
+                        >
+                    </div>
+
+                    <div class="content__container-list">
+                        <div class="container-list__header">
+                            <div class="header__label">
+                                <span class="label__title">Product inventory</span>
+                                <span class="label__counter">0 Products in Catalog</span>
+                            </div>
+                            <button
+                                class="header__button"
+                                data-color="blue">
+                                + New Product
+                            </button>
+                        </div>
+
+                        <div class="container-list__body">
+                            <div class="table-wrapper">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>SKU</th>
+                                            <th>Name</th>
+                                            <th>Price</th>
+                                            <th>Stock</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!--If results are empty-->
+
+                            <div class="empty-result">
+                                <div
+                                    style="
+                                        display: flex;
+                                        flex-direction: column;
+                                        align-items: center;
+                                        justify-content: center;
+                                        height: 100%;
+                                        gap: 8px;
+                                    ">
+                                    <i
+                                        class="fa fa-home"
+                                        style="
+                                            text-align: center;
+                                            font-size: var(--text-5xl);
+                                            color: var(--secondary-color-text);
+                                        "></i>
+                                    <div
+                                        class="empty__description"
+                                        style="text-align: center">
+                                        <span
+                                            style="
+                                                font-size: var(--text-lg);
+                                                color: var(--secondary-color-text);
+                                                text-align: center;
+                                            "
+                                            >No products found in the inventory.</span
+                                        >
+                                        <span
+                                            style="
+                                                font-size: var(--text-base);
+                                                color: var(--lastly-color-text);
+                                            "
+                                            >Add a new product</span
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-wrapper">
+                        <div class="form-container">
+                            <div class="form__header">
+                                <span class="header__title">Add new Product</span>
+                                <i class="fa-solid fa-x close-button"></i>
+                            </div>
+                            <form >
+                                <div>
+                                    <label for="sku">SKU:</label>
+                                    <input
+                                        type="text"
+                                        id="sku"
+                                        name="sku"
+                                        required />
+                                </div>
+                                <br />
+
+                                <div>
+                                    <label for="name">Name:</label>
+                                    <input
+                                        type="text"
+                                        id="name"
+                                        name="name"
+                                        required />
+                                </div>
+                                <br />
+
+                                <div>
+                                    <label for="price">Price:</label>
+                                    <input
+                                        type="number"
+                                        id="price"
+                                        name="price"
+                                        step="0.01"
+                                        required />
+                                </div>
+                                <br />
+
+                                <div>
+                                    <label for="quantity">Quantity in Stock:</label>
+                                    <input
+                                        type="number"
+                                        id="quantity"
+                                        name="quantity"
+                                        required />
+                                </div>
+                                <br />
+
+                                <div>
+                                    <label for="min-stock">Minimum Stock Level:</label>
+                                    <input
+                                        type="number"
+                                        id="min-stock"
+                                        name="min-stock"
+                                        required />
+                                </div>
+                                <br />
+
+                                <button
+                                    id="submit-button"
+                                    type="submit">
+                                    Submit 
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+        <script
+            type="module"
+            src="/src/js/script.js"></script>
+    </body>
+</html>
+
+<!-- <div class="wrapper">
+    <custom-aside></custom-aside>
+    <main>
+        <custom-header></custom-header>
+        <section class="content">
+            <div class="content__title">
+                <h2 class="page-title">Products</h2>
+                <span class="page-description"
+                    >Manage your inventory, sales, and customer records</span
+                >
+            </div>
+
+            <div class="content__container-list">
+                <div class="container-list__header">
+                    <div class="header__label">
+                        <span class="label__title">Product inventory</span>
+                        <span class="label__counter">0 Products in Catalog</span>
+                    </div>
+                    <button
+                        class="header__button"
+                        data-color="blue">
+                        + New Product
+                    </button>
+                </div>
+                <div class="container-list__body">
+                    <div
+                        class="table-responsive"
+                        style="background-color: blue">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th>SKU</th>
+                                    <th>Price</th>
+                                    <th>Stock</th>
+                                    <th>Category</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody> -->
+
+<!-- </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div> -->

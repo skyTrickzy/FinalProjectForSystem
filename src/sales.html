@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="/src/css/stylesheet.css" />
+        <title>Document</title>
+    </head>
+    <body>
+        <div class="wrapper">
+            <custom-aside> </custom-aside>
+            <main>
+                <custom-header></custom-header>
+
+                <section class="content">
+                    <div class="content__title">
+                        <h2 class="page-title">Sales</h2>
+                        <span class="page-description"
+                            >Manage your inventory, sales, and customer records</span
+                        >
+                    </div>
+
+                    <div class="content__container-list">
+                        <div class="container-list__header">
+                            <div class="header__label">
+                                <span class="label__title">Sales Transactions</span>
+                                <span class="label__counter">0 Total Transactions</span>
+                            </div>
+                            <button
+                                class="header__button"
+                                data-color="green">
+                                + New Product
+                            </button>
+                        </div>
+
+                        <div class="container-list__body">
+                            <div class="table-wrapper">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Time</th>
+                                            <th>Customer</th>
+                                            <th>Payment Method</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+
+                            <!--If results are empty-->
+
+                            <div class="empty-result">
+                                <div
+                                    style="
+                                        display: flex;
+                                        flex-direction: column;
+                                        align-items: center;
+                                        justify-content: center;
+                                        height: 100%;
+                                        gap: 8px;
+                                    ">
+                                    <i
+                                        class="fa-solid fa-cube"
+                                        style="
+                                            text-align: center;
+                                            font-size: var(--text-5xl);
+                                            color: var(--secondary-color-text);
+                                        "></i>
+                                    <div
+                                        class="empty__description"
+                                        style="text-align: center">
+                                        <span
+                                            style="
+                                                font-size: var(--text-lg);
+                                                color: var(--secondary-color-text);
+                                                text-align: center;
+                                            "
+                                            >No Sales found in the Transactions</span
+                                        >
+                                        <span
+                                            style="
+                                                font-size: var(--text-base);
+                                                color: var(--lastly-color-text);
+                                            "
+                                            >Add a new Transaction</span
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+        <script
+            type="module"
+            src="/src/js/script.js"></script>
+    </body>
+</html>

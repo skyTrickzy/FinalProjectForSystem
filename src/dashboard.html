@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="/src/css/stylesheet.css" />
+        <title>Document</title>
+    </head>
+    <body>
+        <div class="wrapper">
+            <custom-aside></custom-aside>
+            <main>
+                <custom-header></custom-header>
+
+                <section class="content">
+                    <div class="content__title">
+                        <h2 class="page-title">Dashboard</h2>
+                        <span class="page-description"
+                            >Manage your inventory, sales, and customer records</span
+                        >
+                    </div>
+                    <div class="content__card-section">
+                        <div class="card">
+                            <div class="card__header">
+                                <h4 class="header__card-title">Today's Sales</h4>
+                                <div
+                                    class="header__card-icon"
+                                    data-color="green"></div>
+                            </div>
+                            <div class="card__body">
+                                <span
+                                    class="quantity"
+                                    id="revenue"
+                                    >$0.00</span
+                                >
+                                <span class="description">Revenue from Sales today</span>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card__header">
+                                <h4 class="header__card-title">Today's Expenses</h4>
+                                <div
+                                    class="header__card-icon"
+                                    data-color="red"></div>
+                            </div>
+                            <div class="card__body">
+                                <span
+                                    class="quantity"
+                                    id="revenue"
+                                    >$0.00</span
+                                >
+                                <span class="description">Total Expenses today</span>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card__header">
+                                <h4 class="header__card-title">Today's Profit</h4>
+                                <div
+                                    class="header__card-icon"
+                                    data-color="darkgreen"></div>
+                            </div>
+                            <div class="card__body">
+                                <span
+                                    class="quantity"
+                                    id="profit"
+                                    >$0.00</span
+                                >
+                                <span class="description">Net Profit today</span>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card__header">
+                                <h4 class="header__card-title">Low Stock Items</h4>
+                                <div
+                                    class="header__card-icon"
+                                    data-color="yellow"></div>
+                            </div>
+                            <div class="card__body">
+                                <span
+                                    class="quantity"
+                                    id="stock"
+                                    >0</span
+                                >
+                                <span class="description">Items need Restocking </span>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card__header">
+                                <h4 class="header__card-title">Today's Customers</h4>
+                                <div
+                                    class="header__card-icon"
+                                    data-color="green"></div>
+                            </div>
+                            <div class="card__body">
+                                <span
+                                    class="quantity"
+                                    id="customer"
+                                    >0</span
+                                >
+                                <span class="description">Outstanding Payments</span>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card__header">
+                                <h4 class="header__card-title">Total Customers</h4>
+                                <div
+                                    class="header__card-icon"
+                                    data-color="green"></div>
+                            </div>
+                            <div class="card__body">
+                                <span
+                                    class="quantity"
+                                    id="revenue"
+                                    >0</span
+                                >
+                                <span class="description">0 Active Customers</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+        <script
+            type="module"
+            src="/src/js/script.js"></script>
+    </body>
+</html>
+
+<!-- <header>
+                    <div class="actions-bar">
+                        <div class="actions__searchBar">
+                            <div class="inputs">
+                                <input
+                                    class="search-input"
+                                    type="text"
+                                    placeholder="Search for products, customers..." />
+                                <button class="button-search">
+                                    <i class="fa-solid fa-magnifying-glass icons"></i>
+                                </button>
+                            </div>
+
+                            <div class="search-results-tab">
+                            </div>
+
+                        </div>
+
+                        <div class="actions__notification-bar-and-profile-bar">
+                            <div class="notification-bar">
+                                <i class="fa-solid fa-bell icons notification__bell">
+
+                                </i>
+                                <div class="notification__tab">
+
+                                </div>
+                            </div>
+
+                            <div class="profile-bar">
+                                <div class="profile__picture">
+                                </div>
+                                <div class="profile__tab">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </header> -->
+
+<!-- <aside>
+                <div class="aside__logo">
+                    <img
+                        src="/src/public/fictionalLogo.svg"
+                        alt="" />
+                </div>
+                <div class="aside__title">
+                    <h2>Store Management</h2>
+                </div>
+                <div class="aside__nav">
+                    <nav>
+                        <a
+                            href="#"
+                            aria-label="Dashboard">
+                            <i class="fa fa-home icons"></i>
+                            <span>Dashboard</span>
+                        </a>
+
+                        <a
+                            href="/src/pages/products/products.html"
+                            aria-label="Products">
+                            <i class="fa-solid fa-cube icons"></i>
+                            <span>Products</span>
+                        </a>
+
+                        <a
+                            href="/src/pages/sales/sales.html"
+                            aria-label="Sales">
+                            <i class="fas fa-shopping-cart icons"></i>
+                            <span>Sales</span>
+                        </a>
+
+                        <a
+                            href="/src/pages/expenses/expenses.html"
+                            aria-label="Expenses">
+                            <i class="fa-solid fa-credit-card icons"></i>
+                            <span>Expenses</span>
+                        </a>
+
+                        <a
+                            href="/src/pages/customers/customers.html"
+                            aria-label="Customers">
+                            <i class="fa-solid fa-person icons"></i>
+                            <span>Customers</span>
+                        </a>
+
+                        <a
+                            href="/src/pages/reports/reports.html"
+                            aria-label="Reports">
+                            <i class="fa-solid fa-circle-exclamation icons"></i>
+                            <span>Reports</span>
+                        </a>
+                    </nav>
+                </div>
+                <div class="aside__logout">
+                    <button
+                        id="logout"
+                        class="btn">
+                        Log Out
+                    </button>
+                </div>
+            </aside> -->
