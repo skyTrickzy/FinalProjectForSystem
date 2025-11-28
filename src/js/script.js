@@ -1,14 +1,16 @@
 import CustomAside from "./components/sidebar.js";
 import CustomHeader from "./components/header.js";
-import { customer_list } from "./global-state.js";
-import { product_list } from "./global-state.js";
+import { idHandler } from "./global-state.js";
 import { HTMLPath } from "./global-state.js";
 import { activityState } from "./global-state.js";
+import { items } from "./items.js";
+import { forms } from "./form.js";
+import { updateUI } from "./UI.js";
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {   
     HTMLPath.updatePath();
     attachListeners();
-    updateUI();
+    updateUI.product(items.products.list);
 });
 
 /**
@@ -26,58 +28,6 @@ function attachListeners() {
         attachEventDelegationListener();
     }
 }
-/**
- *
- * @param {{}[]} list
- * @param {number} id
- */
-function deleteItem(id) {
-    for (let i = 0; i < product_list.length; i++) {
-        if (product_list[i].id === id) {
-            product_list.splice(i, 1);
-            break;
-        }
-    }
-    updateUI();
-}
-
-function addNewProduct() {
-    const fieldsValues = returnProductFields();
-    const newProduct = {
-        ...fieldsValues,
-        id: Date.now(),
-        status:
-            fieldsValues.quantity > 0
-                ? fieldsValues.quantity > fieldsValues.min_stock
-                    ? "Available"
-                    : "low"
-                : "No stock",
-    };
-
-    product_list.unshift(newProduct);
-    updateUI();
-}
-/**
- * 
- * @param {number} curID 
- */
-function retrieveItem(curID) {
-    const {id, sku, name, price, status, stock, min_stock} = product_list.find(cur => cur.id === curID);
-}
-
-/**
- * Gets all the input's values
- * @returns {{sku: string, name: string, price: number, quantity: number, min_stock: number}}
- */
-function returnProductFields() {
-    return {
-        sku: document.getElementById("sku").value,
-        name: document.getElementById("name").value,
-        price: document.getElementById("price").value,
-        quantity: document.getElementById("quantity").value,
-        min_stock: document.getElementById("min-stock").value,
-    };
-}
 
 function attachEventDelegationListener() {
     document.querySelector("table").addEventListener("click", (e) => {
@@ -86,11 +36,39 @@ function attachEventDelegationListener() {
                 activityState.changeState("updating");
                 toggleFormCards({ toggleState: true });
                 const id = Number(e.target.getAttribute("unique"));
-                retrieveItem(id);
+                idHandler.setID(id);
+
+                switch (HTMLPath.name) {
+                    case "/products.html":
+                        const currentItem = items.products.retrieve(id);
+                        forms.product.set(currentItem);
+                    case "/expense.html":
+                        break;
+
+                    case "/sales.html":
+                        break;
+
+                    case "/customers.html":
+                        break;
+                }
             }
             if (e.target.innerHTML === "Delete") {
                 const id = Number(e.target.getAttribute("unique"));
-                deleteItem(id);
+
+                switch (HTMLPath.name) {
+                    case "/products.html":
+                        items.products.delete(id);
+                        updateUI.product(items.products.list);
+                        break;
+                    case "/expense.html":
+                        break;
+
+                    case "/sales.html":
+                        break;
+
+                    case "/customers.html":
+                        break;
+                }
             }
         }
     });
@@ -106,9 +84,17 @@ function attachSubmitListener() {
             throw new Error("invalid or incomplete fields");
         }
 
+        let formValues;
+
         switch (HTMLPath.name) {
             case "/products.html":
-                addNewProduct();
+                formValues = forms.product.retrieve();
+
+                activityState.state === "creating"
+                    ? items.products.add(formValues)
+                    : items.products.update(idHandler.id, formValues);
+
+                updateUI.product(items.products.list);
                 break;
 
             case "/expense.html":
@@ -230,58 +216,5 @@ function toggleFormCards({ toggleState }) {
         }
     } else {
         document.querySelector(".form-wrapper").style.display = "none";
-    }
-}
-
-function updateUI() {
-    const emptyIndicator = document.querySelector(".empty-result");
-    const tableBody = document.querySelector("tbody");
-
-    tableBody.innerHTML = "";
-
-    switch (HTMLPath.name) {
-        case "/products.html":
-            updateProduct();
-            break;
-
-        case "/expense.html":
-            break;
-
-        case "/sales.html":
-            break;
-
-        case "/customers.html":
-            break;
-    }
-
-    function updateProduct() {
-        if (product_list.length === 0) {
-            emptyIndicator.style.display = "block";
-            return;
-        }
-
-        if (product_list.length > 0) emptyIndicator.style.display = "none";
-
-        for (let el of product_list) {
-            const tr = document.createElement("tr");
-            tableBody.appendChild(tr);
-
-            for (const [key, value] of Object.entries(el)) {
-                if (key === "id" || key === "min_stock") {
-                    continue;
-                }
-
-                const td = document.createElement("td");
-                td.innerText = value;
-
-                tr.appendChild(td);
-            }
-
-            const td = document.createElement("td");
-            td.innerHTML = `<button id="update" unique="${String(el.id)}">Update</button>
-            <button id="delete" unique="${String(el.id)}">Delete</button>`;
-
-            tr.appendChild(td);
-        }
     }
 }
