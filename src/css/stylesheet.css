@@ -330,6 +330,21 @@ tr:nth-child(even) {
     }
 }
 
+[data-color="red"] {
+    background-color: hsl(0, 100%, 42%);
+
+    &:hover {
+        background-color: hsl(0, 100%, 33%);
+    }
+}
+
+[data-color="purple"] {
+    background-color: hsl(279, 100%, 44%);
+
+    &:hover {
+        background-color: hsl(271, 100%, 32%);
+    }
+}
 .empty-result {
     display: none;
     height: 20rem;
@@ -391,7 +406,7 @@ form {
     gap: 0.5rem;
 }
 
-form div {
+form > div {
     display: flex;
     flex-direction: column;
 }
@@ -427,4 +442,33 @@ form button {
     &:hover {
         filter: brightness(80%);
     }
+}
+
+.unique-field {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+
+    > input {
+        min-width: 0;
+    }
+}
+
+.empty__description {
+    display: flex;
+    flex-direction: column;
+}
+
+.expenses-total {
+    color: hsl(0, 100%, 68%);
+    font-size: var(--text-xl);
+    margin-left: 0.5rem;
+    font-weight: var(--text-regular);
+}
+
+.debt-total {
+    color: hsl(237, 100%, 68%);
+    font-size: var(--text-xl);
+    margin-left: 0.5rem;
+    font-weight: var(--text-regular);
 }

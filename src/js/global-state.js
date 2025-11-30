@@ -1,14 +1,13 @@
-export const HTMLPath = {
-    name: "",
-    path: "",
-    updatePath: () => {
-        const originalPath = window.location.pathname;
-        const path = originalPath.replace(/^\/src/, "");
+export const HTMLPath = (() => {
+    const originalPath = window.location.pathname;
+    const path = originalPath.replace(/^\/src/, "");
+    
+    return {
+        name: path,
+        path: originalPath
+    };
+})();
 
-        HTMLPath.name = path;
-        HTMLPath.path = originalPath;
-    },
-};
 
 /**
  * @type {{state: string, changeState: () => void}}
@@ -23,6 +22,8 @@ export const activityState = {
         if (newState === "creating" || newState === "updating" || newState === "reading")
             activityState.state = newState;
         else throw new Error("Invalid argument");
+
+        console.log(newState);
     },
 };
 
@@ -32,3 +33,5 @@ export const idHandler = {
         this.id = id;
     },
 };
+
+export const MAX_CAPACITY = 10;

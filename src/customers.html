@@ -22,6 +22,111 @@
                             >Manage your inventory, sales, and customer records</span
                         >
                     </div>
+
+                    <div class="content__container-list">
+                        <div class="container-list__header">
+                            <div class="header__label">
+                                <span class="label__title">Customer Debt Tracking</span>
+                                <span class="label__counter">Total Outstanding Debt: <span class="debt-total"></span></span>
+                            </div>
+                            <button
+                                class="header__button"
+                                data-color="purple">
+                                + New Product
+                            </button>
+                        </div>
+
+                        <div class="container-list__body">
+                            <div class="table-wrapper">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Phone</th>
+                                            <th>Email</th>
+                                            <th>Debt</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+
+                            <!--If results are empty-->
+
+                            <div class="empty-result">
+                                <div
+                                    style="
+                                        display: flex;
+                                        flex-direction: column;
+                                        align-items: center;
+                                        justify-content: center;
+                                        height: 100%;
+                                        gap: 8px;
+                                    ">
+                                    <i
+                                        class="fa-solid fa-person icons"
+                                        style="
+                                            text-align: center;
+                                            font-size: var(--text-5xl);
+                                            color: var(--secondary-color-text);
+                                        "></i>
+                                    <div
+                                        class="empty__description"
+                                        style="text-align: center">
+                                        <span
+                                            style="
+                                                font-size: var(--text-lg);
+                                                color: var(--secondary-color-text);
+                                                text-align: center;
+                                            "
+                                            >No Customers added yet.</span
+                                        >
+                                        <span   
+                                            style="
+                                                font-size: var(--text-base);
+                                                color: var(--lastly-color-text);
+                                            "
+                                            >Add new Customers</span
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-wrapper">
+                        <div class="form-container">
+                            <div class="form__header">
+                                <span class="header__title">Add new Product</span>
+                                <i class="fa-solid fa-x close-button"></i>
+                            </div>
+                            <form>
+                                <div>
+                                    <label for="name">Name:</label>
+                                    <input type="text" name="name" id="name" required>
+                                </div>
+                                <div>
+                                    <label for="phone">Phone:</label>
+                                    <input type="number" id="phone" name="phone" required>
+                                </div>
+                                <div>
+                                    <label for="email">Email:</label>
+                                    <input type="email" id="email" name="email" required>
+                                </div>
+                                <div>
+                                    <label for="debt">Debt:</label>
+                                    <input type="number" name="debt" id="debt" step="1" required>
+                                </div>
+                                <button
+                                    id="submit-button"
+                                    type="submit">
+                                    Submit
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </section>
             </main>
         </div>

@@ -43,12 +43,14 @@
                                     <thead>
                                         <tr>
                                             <th>Date</th>
-                                            <th>Time</th>
+                                            <th>Items</th>
                                             <th>Customer</th>
                                             <th>Payment Method</th>
                                             <th>Total</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
+                                    <tbody></tbody>
                                 </table>
                             </div>
 
@@ -65,7 +67,7 @@
                                         gap: 8px;
                                     ">
                                     <i
-                                        class="fa-solid fa-cube"
+                                        class="fas fa-shopping-cart icons"
                                         style="
                                             text-align: center;
                                             font-size: var(--text-5xl);
@@ -92,6 +94,64 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="form-wrapper">
+                        <div class="form-container">
+                            <div class="form__header">
+                                <span class="header__title">Add new Product</span>
+                                <i class="fa-solid fa-x close-button"></i>
+                            </div>
+                            <form>
+                                <div>
+                                    <select
+                                        id="product_select"
+                                        value=""
+                                        selected>
+                                        <option value=""><---Please select a Product---></option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label for="quantity">Quantity: </label>
+                                    <input
+                                        id="quantity"
+                                        type="number"
+                                        name="quantity"
+                                        value="1"
+                                        step="1" />
+                                </div>
+
+
+                                <div>
+                                    <label for="customers">Customers (Optional)</label>
+                                    <select
+                                        id="customers"
+                                        value=""
+                                        selected>
+                                    <option value=""><--Select a customer--></option>
+                                    </select>
+                                </div>
+
+
+                                <div>
+                                    <label for="customers">Payment Method</label>
+                                    <select
+                                        id="paymentMethod"
+                                        value=""
+                                        selected>
+                                        <option value="Cash">Cash</option>
+                                    </select>
+                                </div>
+
+
+                                <button
+                                    id="submit-button"
+                                    type="submit">
+                                    Submit
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </section>
