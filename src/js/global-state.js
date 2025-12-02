@@ -1,13 +1,12 @@
 export const HTMLPath = (() => {
     const originalPath = window.location.pathname;
     const path = originalPath.replace(/^\/src/, "");
-    
+
     return {
         name: path,
-        path: originalPath
+        path: originalPath,
     };
 })();
-
 
 /**
  * @type {{state: string, changeState: () => void}}
@@ -29,9 +28,10 @@ export const activityState = {
 
 export const idHandler = {
     id: null,
-    setID: function(id) {
+    setID: function (id) {
         this.id = id;
     },
 };
 
 export const MAX_CAPACITY = 10;
+

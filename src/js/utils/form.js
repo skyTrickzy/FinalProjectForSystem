@@ -129,7 +129,7 @@ export const forms = {
 
             nameValue.value = list.name;
             phoneValue.value = list.phone;
-            emailValue.value = list.email;
+            emailValue.value = list.email;  
             debtValue.value = list.debt;
         },
     },

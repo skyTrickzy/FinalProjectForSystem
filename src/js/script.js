@@ -7,6 +7,7 @@ import { items } from "./items.js";
 import { forms } from "./utils/form.js";
 import { updateUI } from "./utils/UI.js";
 import { searchQuery } from "./utils/query.js";
+import { toast } from "./components/toast.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     attachListeners();
@@ -27,6 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (HTMLPath.name === "/dashboard.html") initializeDashboard();
+    getSearchRequest();
 });
 /**
  * attaches all addEventListeners to certain interactive components
@@ -60,13 +62,11 @@ function initializeDashboard() {
 }
 
 function loadOptions() {
-
-
     const selectInput = document.getElementById("product_select");
-    selectInput.innerHTML = '';
+    selectInput.innerHTML = "";
 
     const customerSelect = document.getElementById("customers");
-    customerSelect.innerHTML = '';
+    customerSelect.innerHTML = "";
 
     const productList = [...items.products.list];
     const customerList = [...items.customers.list];
@@ -92,66 +92,10 @@ function attachEventDelegationListener() {
     document.querySelector("table").addEventListener("click", (e) => {
         if (e.target && e.target.tagName === "BUTTON") {
             if (e.target.innerHTML === "Update") {
-                activityState.changeState("updating");
-                toggleFormCards({ toggleState: true });
-                const id = Number(e.target.getAttribute("unique"));
-                idHandler.setID(id);
-                let currentItem;
-                /*
-                 *
-                 * a better version would be
-                 * if (HTMLPath.name !== dashboard.html && sales.html && reports.html)
-                 * then items[HTMLPath.name].retrieve(id);
-                 * forms[HTMLPath.name].set(currentItem)
-                 *
-                 */
-                switch (HTMLPath.name) {
-                    case "/products.html":
-                        currentItem = items.products.retrieve(id);
-                        forms.product.set(currentItem);
-                        break;
-                    case "/expenses.html":
-                        currentItem = items.expenses.retrieve(id);
-                        forms.expense.set(currentItem);
-                        break;
-
-                    case "/customers.html":
-                        currentItem = items.customers.retrieve(id);
-                        forms.customers.set(currentItem);
-                        break;
-                }
+                retrieveItemToUpdate(e);
             }
             if (e.target.innerHTML === "Delete") {
-                const id = Number(e.target.getAttribute("unique"));
-                // this too can be refactored to just items[HTMLPath.name].delete then updateUI[HTMLPath.name](items[HTMLPath.name].list)
-                /*
-                 *
-                 *   if not dashboard or reports
-                 * then items[HTMLPath.name].delete(id)
-                 * updateUI[HTMLPath.name](items[HTMLPath.name].list)
-                 *
-                 *
-                 */
-                switch (HTMLPath.name) {
-                    case "/products.html":
-                        items.products.delete(id);
-                        updateUI.product(items.products.list);
-                        break;
-                    case "/expenses.html":
-                        items.expenses.delete(id);
-                        updateUI.expense(items.expenses.list);
-                        break;
-
-                    case "/sales.html":
-                        items.sales.delete(id);
-                        updateUI.sales(items.sales.list);
-                        break;
-
-                    case "/customers.html":
-                        items.customers.delete(id);
-                        updateUI.customers(items.customers.list);
-                        break;
-                }
+                deleteSpecificItem(e);
             }
         }
     });
@@ -165,7 +109,8 @@ function attachSubmitListener() {
         e.preventDefault();
 
         if (!form.checkValidity()) {
-            throw new Error("invalid or incomplete fields");
+            toast.error("ERROR", "Incomplete or invalid fields");
+            return;
         }
 
         let formValues;
@@ -188,9 +133,15 @@ function attachSubmitListener() {
             case "/products.html":
                 formValues = forms.product.retrieve();
 
-                activityState.state === "creating"
-                    ? items.products.add(formValues)
-                    : items.products.update(idHandler.id, formValues);
+                if (activityState.state === "creating") {
+                    items.products.add(formValues);
+                    toast.success("SUCCESS", "Successfully submitted an entry to Products");
+                }
+
+                if (activityState.state === "updating") {
+                    items.products.update(idHandler.id, formValues);
+                    toast.success("SUCCESS", "Successfully updated an entry to Products");
+                }
 
                 updateUI.product(items.products.list);
                 break;
@@ -198,9 +149,15 @@ function attachSubmitListener() {
             case "/expenses.html":
                 formValues = forms.expense.retrieve();
 
-                activityState.state === "creating"
-                    ? items.expenses.add(formValues)
-                    : items.expenses.update(idHandler.id, formValues);
+                if (activityState.state === "creating") {
+                    items.expenses.add(formValues);
+                    toast.success("SUCCESS", "Successfully submitted an entry to Expenses");
+                }
+
+                if (activityState.state === "updating") {
+                    items.expenses.update(idHandler.id, formValues);
+                    toast.success("SUCCESS", "Successfully updated an entry to Expenses");
+                }
 
                 updateUI.expense(items.expenses.list);
                 break;
@@ -218,17 +175,23 @@ function attachSubmitListener() {
                 loadOptions();
 
                 updateUI.sales(items.sales.list);
+                toast.success("SUCCESS", "Successfully submitted an entry to Sales");
                 break;
 
             case "/customers.html":
                 formValues = forms.customers.retrieve();
 
-                activityState.state === "creating"
-                    ? items.customers.add(formValues)
-                    : items.customers.update(idHandler.id, formValues);
+                if (activityState.state === "creating") {
+                    items.customers.add(formValues);
+                    toast.success("SUCCESS", "Successfully submitted an entry to Products");
+                }
+
+                if (activityState.state === "updating") {
+                    items.customers.update(idHandler.id, formValues);
+                    toast.success("SUCCESS", "Successfully updated an entry to Products");
+                }
 
                 updateUI.customers(items.customers.list);
-
                 break;
         }
 
@@ -241,29 +204,22 @@ function attachSearchListeners() {
     const searchInput = document.querySelector(".search-input");
     const resultsTab = document.querySelector(".search-results-tab");
 
-    resultsTab.style.display = 'none'
+    resultsTab.style.display = "none";
 
     searchInput.addEventListener("focus", function () {
         this.addEventListener("input", (e) => {
             if (e.target.value !== "") {
-
                 const query = e.target.value;
 
                 const results = searchQuery(query);
 
                 setTimeout(() => {
                     updateUI.searchBar(results, query);
-                    
+                    attachSearchItemsListener(results);
                     resultsTab.style.display = "flex";
-                }, 500);
-
+                }, 250);
             } else resultsTab.style.display = "none";
-
         });
-    });
-
-    searchInput.addEventListener("blur", () => {
-        resultsTab.style.display = "none";
     });
 }
 
@@ -345,6 +301,10 @@ function attachToggleFormCardListeners() {
     });
 }
 
+function attachSearchItemsListener({ products, expenses, customers }) {
+    if (products.length === 0 && expenses.length === 0 && customers.length === 0) return;
+    document.querySelector(".search-results-tab").addEventListener("click", changeHTMLPath);
+}
 /**
  * toggles the form container
  * true for visible false for none
@@ -443,10 +403,90 @@ function getTotalDebt() {
     customer.innerText = "P" + formatNumber(totalDebt);
 }
 
-function attachSearchItemsListener() {
-    const changeHTMLPath = () => {
+function changeHTMLPath(e) {
+    if (e.target && e.target.closest(".item-container")) {
+        const item = e.target.closest(".item-container");
+        const itemID = item.getAttribute("unique");
+        const itemCategory = item.dataset.category;
 
+        localStorage.setItem("request", itemID);
+
+        window.location.href = itemCategory + ".html";
     }
+}
 
-    document.querySelector('.search-results-tab').addEventListener('click', changeHTMLPath)
+function getSearchRequest() {
+    const requestedItem = localStorage.getItem("request");
+
+    if (!requestedItem) return;
+
+    localStorage.removeItem("request");
+}
+
+function retrieveItemToUpdate(e) {
+    activityState.changeState("updating");
+    toggleFormCards({ toggleState: true });
+    const id = Number(e.target.getAttribute("unique"));
+    idHandler.setID(id);
+    let currentItem;
+    /*
+     *
+     * a better version would be
+     * if (HTMLPath.name !== dashboard.html && sales.html && reports.html)
+     * then items[HTMLPath.name].retrieve(id);
+     * forms[HTMLPath.name].set(currentItem)
+     *
+     */
+    switch (HTMLPath.name) {
+        case "/products.html":
+            currentItem = items.products.retrieve(id);
+            forms.product.set(currentItem);
+            break;
+        case "/expenses.html":
+            currentItem = items.expenses.retrieve(id);
+            forms.expense.set(currentItem);
+            break;
+
+        case "/customers.html":
+            currentItem = items.customers.retrieve(id);
+            forms.customers.set(currentItem);
+            break;
+    }
+}
+
+function deleteSpecificItem(e) {
+    const id = Number(e.target.getAttribute("unique"));
+    // this too can be refactored to just items[HTMLPath.name].delete then updateUI[HTMLPath.name](items[HTMLPath.name].list)
+    /*
+     *
+     *   if not dashboard or reports
+     * then items[HTMLPath.name].delete(id)
+     * updateUI[HTMLPath.name](items[HTMLPath.name].list)
+     *
+     *
+     */
+    switch (HTMLPath.name) {
+        case "/products.html":
+            items.products.delete(id);
+            updateUI.product(items.products.list);
+            toast.success("SUCCESS", "successfully deleted the product");
+            break;
+        case "/expenses.html":
+            items.expenses.delete(id);
+            updateUI.expense(items.expenses.list);
+            toast.success("SUCCESS", "successfully deleted the expense");
+            break;
+
+        case "/sales.html":
+            items.sales.delete(id);
+            updateUI.sales(items.sales.list);
+            toast.success("SUCCESS", "successfully deleted the transaction");
+            break;
+
+        case "/customers.html":
+            items.customers.delete(id);
+            updateUI.customers(items.customers.list);
+            toast.success("SUCCESS", "successfully deleted the customers");
+            break;
+    }
 }

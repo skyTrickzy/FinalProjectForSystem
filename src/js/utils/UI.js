@@ -246,7 +246,7 @@ export const updateUI = {
 
 function createProductItem(product) {
     const item = ` 
-        <div class="item-container" data-category="products">
+        <div class="item-container" data-category="products" unique=${product.id}>
             <div class="category-icon-container">
                 <i class="fa fa-cube"></i>
             </div>
@@ -267,7 +267,7 @@ function createProductItem(product) {
 
 function createExpenseItem(expense) {
     const item = ` 
-        <div class="item-container" data-category="expense">
+        <div class="item-container" data-category="expenses" unique=${expense.id}>
             <div class="category-icon-container">
                 <i class="fa-solid fa-credit-card"></i>
             </div>
@@ -290,7 +290,7 @@ function createExpenseItem(expense) {
 
 function createCustomerItem(customer) {
     const item = ` 
-        <div class="item-container" data-category="expense">
+        <div class="item-container" data-category="customers" unique=${customer.id}> 
             <div class="category-icon-container">
                 <i class="fa-solid fa-credit-card"></i>
             </div>
