@@ -8,8 +8,20 @@ import { forms } from "./utils/form.js";
 import { updateUI } from "./utils/UI.js";
 import { searchQuery } from "./utils/query.js";
 import { toast } from "./components/toast.js";
+import { withAuth } from "./auth/authentication.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+    if (!withAuth()) {
+        toast.error(
+            "Error you are not authorized, Redirecting to login page...",
+            "Unauthorized Login"
+        );
+
+        setTimeout(() => {
+            window.location.href = 'login.html';    
+        }, 4000)
+    }
+
     attachListeners();
     switch (HTMLPath.name) {
         case "/products.html":
@@ -29,6 +41,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (HTMLPath.name === "/dashboard.html") initializeDashboard();
     getSearchRequest();
+
+    document.getElementById("logout").addEventListener("click", () => {
+        localStorage.removeItem("user");
+        window.location.href = "login.html";
+    });
 });
 /**
  * attaches all addEventListeners to certain interactive components
@@ -36,7 +53,6 @@ document.addEventListener("DOMContentLoaded", () => {
  */
 function attachListeners() {
     attachSearchListeners();
-    attachNotificationListeners();
     attachProfileListeners();
 
     if (HTMLPath.name !== "/dashboard.html" && HTMLPath.name !== "/reports.html") {
@@ -59,6 +75,8 @@ function initializeDashboard() {
     const totalCustomers = document.getElementById("totalCustomers");
 
     totalCustomers.innerText = items.customers.list.length;
+
+    updateUI.dashboard(items.products.list);
 }
 
 function loadOptions() {
@@ -223,38 +241,38 @@ function attachSearchListeners() {
     });
 }
 
-function attachNotificationListeners() {
-    const notifBell = document.querySelector(".notification__bell");
-    const notifTab = document.querySelector(".notification__tab");
+// function attachNotificationListeners() {
+//     const notifBell = document.querySelector(".notification__bell");
+//     const notifTab = document.querySelector(".notification__tab");
 
-    let state = false;
+//     let state = false;
 
-    const closeOnBlur = (e) => {
-        if (e.target.className !== "notification__tab") {
-            state = false;
-            notifTab.style.display = "none";
-            document.removeEventListener("click", closeOnBlur);
-        }
-    };
+//     const closeOnBlur = (e) => {
+//         if (e.target.className !== "notification__tab") {
+//             state = false;
+//             notifTab.style.display = "none";
+//             document.removeEventListener("click", closeOnBlur);
+//         }
+//     };
 
-    notifBell.addEventListener("click", () => {
-        if (!state) {
-            state = true;
-            notifTab.style.display = "flex";
-            setTimeout(() => {
-                document.addEventListener("click", closeOnBlur);
-            }, 200);
-            return;
-        }
+//     notifBell.addEventListener("click", () => {
+//         if (!state) {
+//             state = true;
+//             notifTab.style.display = "flex";
+//             setTimeout(() => {
+//                 document.addEventListener("click", closeOnBlur);
+//             }, 200);
+//             return;
+//         }
 
-        if (state) {
-            state = false;
-            notifTab.style.display = "none";
-            document.removeEventListener("click", closeOnBlur);
-            return;
-        }
-    });
-}
+//         if (state) {
+//             state = false;
+//             notifTab.style.display = "none";
+//             document.removeEventListener("click", closeOnBlur);
+//             return;
+//         }
+//     });
+// }
 
 function attachProfileListeners() {
     const profilePic = document.querySelector(".profile__picture");

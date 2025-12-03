@@ -242,7 +242,37 @@ export const updateUI = {
             }
         }
     },
+
+    dashboard: (product) => {
+        const lowStockItems = product.filter(
+            (cur) => cur.status === "Low Stock" || cur.status === "No Stock"
+        );
+
+        if (lowStockItems.length === 0) return;
+
+        document.querySelector(".content").insertAdjacentHTML(
+            "beforeend",
+            `<div class="low-stock-container">
+                <span class="low-stock-title">Low Stock Alert!, The following items need restocking</span> 
+                <div class="low-stock-items"></div> 
+            </div>`
+        );
+
+        const lowStockList = document.querySelector(".low-stock-items");
+
+        lowStockItems.forEach((cur) => {
+            const item = `<div class="low-stock-item">
+                <span class="item-name">${cur.name}</span>
+                <span class="item-stock-remain">${cur.quantity > 0 ? "Only " + cur.quantity + " left" : "No Stock"}</span>
+                <span class="item-min-level">(Min: ${cur.min_stock})</span>
+            </div>`;
+
+            lowStockList.insertAdjacentHTML('afterbegin', item);
+        });
+    },
 };
+
+
 
 function createProductItem(product) {
     const item = ` 

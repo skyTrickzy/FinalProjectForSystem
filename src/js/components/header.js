@@ -71,11 +71,6 @@ export default class CustomHeader extends HTMLElement {
             </div>
 
             <div class="actions__notification-bar-and-profile-bar">
-                <div class="notification-bar">
-                    <i class="fa-solid fa-bell icons notification__bell"> </i>
-                    <div class="notification__tab"></div>
-                </div>
-
                 <div class="profile-bar">
                     <div class="profile__picture"></div>
                     <div class="profile__tab"></div>

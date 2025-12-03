@@ -7,13 +7,21 @@ export const forms = {
          * @returns {{sku: string, name: string, price: string, quantity: string, min_stock: string}}
          */
         retrieve: () => {
-            return {
+            const sku = document.getElementById("sku").value;
+            const name = document.getElementById("name").value;
+            const price = document.getElementById("price").value;
+            const quantity = document.getElementById("quantity").value
+
+
+            const retrievedValues = {
                 sku: document.getElementById("sku").value,
                 name: document.getElementById("name").value,
                 price: document.getElementById("price").value,
                 quantity: document.getElementById("quantity").value,
                 min_stock: document.getElementById("min-stock").value,
             };
+
+            return retrievedValues;
         },
         /**
          *
